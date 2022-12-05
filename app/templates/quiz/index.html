@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head> 
+    {% load static %}    
+    {% block title %}
+    <a><title>Последние обновления на сайте</title></a>
+    {% endblock %}
+  </head>
+  <body>
+    <header>      
+    </header>
+    <main> 
+      {% block content %}
+      <div class="container py-5">     
+        <h1>Последние тесты</h1>
+        <article>
+          {% for quiz in quiz_list %}
+            <ul>
+              <li>
+                Название: {{ quiz.title }}
+              </li>
+              <li>
+                Дата публикации: {{ quiz.created_at|date:"d E Y" }}
+              </li>
+            </ul>
+            <p>{{ quiz.description }}</p>    
+            <!-- {% if post.group %}   
+              <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
+            {% endif %}
+            {% if not forloop.last %}<hr>{% endif %} -->
+          {% endfor %}
+        </article>
+      </div>
+      {% endblock %}  
+    </main>         
+    <footer class="border-top text-center py-3">   
+    </footer>
+  </body>
