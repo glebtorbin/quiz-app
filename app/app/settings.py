@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'quiz',
+    'users',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +73,8 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'quiz:index'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

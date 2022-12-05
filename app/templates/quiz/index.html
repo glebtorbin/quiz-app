@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load static %} 
 <!DOCTYPE html>
 <html lang="ru">
   <head> 
-    {% load static %}    
+{% load static %}    
     {% block title %}
     <a><title>Последние обновления на сайте</title></a>
     {% endblock %}
@@ -25,10 +26,6 @@
               </li>
             </ul>
             <p>{{ quiz.description }}</p>    
-            <!-- {% if post.group %}   
-              <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
-            {% endif %}
-            {% if not forloop.last %}<hr>{% endif %} -->
           {% endfor %}
         </article>
       </div>
