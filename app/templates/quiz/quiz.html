@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    Редактировать запись
+    test
 {% endblock %} 
 {% block content %}
 {% load user_filters %}
@@ -9,7 +9,7 @@
       <div class="col-md-8 p-5">
         <div class="card">
           <div class="card-header">       
-              Редактировать запись
+              {{ quiz.title }}
           </div>
             <div class="card-body">        
               <form method="post" enctype="multipart/form-data" action="{% url 'quiz:quiz_passing' quiz_id=quiz.id %}">                 
@@ -26,17 +26,17 @@
                       {% if field.field.required %}
                         <span class="required text-danger">*</span>
                       {% endif %}
-                    {{ field|addclass:'form-control' }}
+                    {{ field }}
                     {% if field.help_text %}
                     <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
-                      {{ field.help_text|safe }}
+                      {{ field.help_text}}
                     </small>
                     {% endif %}
                   </div>
                 {% endfor %}
                 <div class="d-flex justify-content-end">
                   <button type="submit" class="btn btn-primary"> 
-                     Сохранить
+                     dalee
                   </button>
                 </div>
               </form>

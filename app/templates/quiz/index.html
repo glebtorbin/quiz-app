@@ -25,7 +25,9 @@
                 Дата публикации: {{ quiz.created_at|date:"d E Y" }}
               </li>
             </ul>
-            <p>{{ quiz.description }}</p>    
+            <p>{{ quiz.description }}</p>
+              <a class="nav-link link-light active"
+              href="{% url 'quiz:quiz_passing' quiz.id %}">пройти тест</a>
           {% endfor %}
         </article>
       </div>
