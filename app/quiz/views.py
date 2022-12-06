@@ -7,3 +7,6 @@ def index(request):
         'quiz_list': quiz_list,
     }
     return render(request, 'quiz/index.html', context)
+
+def quiz_passing(request, quiz_id):
+    pass
