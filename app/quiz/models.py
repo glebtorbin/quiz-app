@@ -17,15 +17,24 @@ class Question(models.Model):
     quiz = models.ForeignKey(Quiz, verbose_name='Quiz',
                              on_delete=models.CASCADE,
                              related_name='questions')
-    text = models.TextField('Text')
+    text = models.CharField('Text', max_length=555)
+
+    def __str__(self):
+        return self.text
 
 
 class Answer(models.Model):
+    quiz = models.ForeignKey(Quiz, verbose_name='Quiz',
+                                 on_delete=models.CASCADE,
+                                 related_name='quizes_answers')
     question = models.ForeignKey(Question, verbose_name='Question',
                                  on_delete=models.CASCADE,
                                  related_name='answers')
-    text = models.TextField('Text')
+    text = models.CharField('Text', max_length=455)
     is_true = models.BooleanField('Is true', default=False)
+
+    def __str__(self):
+        return self.text
 
 
 class Result(models.Model):
