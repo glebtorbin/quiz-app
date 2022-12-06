@@ -7,8 +7,8 @@ class AnswersInLine(admin.TabularInline):
     extra = 4
 
 class QuestionInLine(admin.TabularInline):
-    inlines = [AnswersInLine]
     model = Question
+    extra = 1
 
 class QuizAdmin(admin.ModelAdmin):
     inlines = [QuestionInLine, AnswersInLine]
