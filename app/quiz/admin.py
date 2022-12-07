@@ -2,13 +2,13 @@ from django.contrib import admin
 
 from .models import Quiz, Question, Answer
 
-class AnswersInLine(admin.TabularInline):
-    model = Answer
-    extra = 4
-
 class QuestionInLine(admin.TabularInline):
     model = Question
     extra = 1
+
+class AnswersInLine(admin.TabularInline):
+    model = Answer
+    extra = 4
 
 class QuizAdmin(admin.ModelAdmin):
     inlines = [QuestionInLine, AnswersInLine]
