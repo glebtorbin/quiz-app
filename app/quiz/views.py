@@ -1,12 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from .models import Quiz, Answer
+from .models import Quiz, Question, Result
 from django.contrib.auth.decorators import login_required
-from .models import (
-    Question,
-    Quiz,
-    Answer
-)
 
 def index(request):
     quiz_list = Quiz.objects.all()
@@ -18,17 +13,47 @@ def index(request):
 
 def quiz_passing(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
-    questions = Question.objects.filter(quiz=quiz_id)
-    paginator = Paginator(questions, 1)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except:
-        page = 1
-    try:
-        all_que = paginator.page(page)
-    except:
-        all_que = paginator.page(paginator.num_pages)
-    return render(request, 'quiz/quiz.html', {'questions': questions, 'quiz': quiz, 'all_que': all_que})
+    if request.method == 'POST':
+        questions=Question.objects.filter(quiz=quiz_id)
+        score=0
+        wrong=0
+        correct=0
+        total=0
+        for q in questions:
+            total+=1
+            answer = request.POST.get(q.question) # Gets user’s choice, i.e the key of answer
+            items = vars(q) # Holds the value for choice
+            print(items[answer])
+            if q.ans ==  items[answer]:
+                score+=10
+                correct+=1
+            else:
+                wrong+=1
+        percent = score/(total*10) *100
+        Result.objects.create(
+            user=request.user,
+            quiz=quiz,
+            true_answers=correct,
+            false_answers=wrong
+        )
+        context = {
+            'score':score,
+            'time': request.POST.get('timer'),
+            'correct':correct,
+            'wrong':wrong,
+            'percent':percent,
+            'total':total
+        }
+        return render(request, 'quiz/result.html',context)
 
-def result_page(request, quiz_id):
-    quiz = Quiz.objects.get(id=quiz_id)
+    else:
+        questions=Question.objects.filter(quiz=quiz_id)
+        context = {
+            'questions':questions,
+            'quiz': quiz
+        }
+        return render(request,'quiz/quiz.html',context)
+ 
+
+
+

@@ -1,17 +1,14 @@
 from django.contrib import admin
 
-from .models import Quiz, Question, Answer
+from .models import Quiz, Question, Result
 
 class QuestionInLine(admin.TabularInline):
     model = Question
     extra = 1
 
-class AnswersInLine(admin.TabularInline):
-    model = Answer
-    extra = 4
 
 class QuizAdmin(admin.ModelAdmin):
-    inlines = [QuestionInLine, AnswersInLine]
+    inlines = [QuestionInLine]
     list_display = ('pk', 'title', 'description', 'is_active',)
     list_editable = ('is_active',)
     search_fields = ('title',)
@@ -19,8 +16,10 @@ class QuizAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+class ResultAdmin(admin.ModelAdmin):
+    list_display = ('user', 'quiz', 'true_answers', 'false_answers', 'result_date')
 
 
 admin.site.register(Quiz, QuizAdmin)
-
+admin.site.register(Result, ResultAdmin)
 
