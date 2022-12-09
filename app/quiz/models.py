@@ -37,3 +37,4 @@ class Result(models.Model):
     true_answers = models.PositiveSmallIntegerField('True answers', default=0)
     false_answers = models.PositiveSmallIntegerField('False answers', default=0)
     result_date = models.DateTimeField('Done at', auto_now_add=True)
+    score = models.PositiveSmallIntegerField('score', default=0)

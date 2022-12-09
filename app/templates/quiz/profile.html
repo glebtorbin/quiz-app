@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}
+<a><title>Профайл пользователя {{ user.username }} </title></a>
+{% endblock %}
+</head>
+<body>
+{% block content %}       
+<main>
+  <div class="container py-5">        
+    <h1>Все пройденные тесты пользователя {{ user.username }} </h1>
+    <h3>Всего тестов пройтено: {{ results.count }} </h3>
+  </div></h6>   
+    <article>
+        {% for result in results %}
+      <ul>
+        <li>
+          Автор: {{ result.user.username }}  
+        </li>
+        <li>
+            набранные очки: {{ result.score }}
+          </li>
+        <li>
+          Дата прохождения: {{ result.result_date|date:"d E Y" }}
+        </li>
+        <li>
+             Название теста : {{ result.quiz.title }}
+          </li>
+          <li>
+            кол-во правильных ответов: {{ result.true_answers }}
+         </li>
+         <li>
+            кол-во неправильных ответов: {{ result.false_answers }}
+         </li>
+      </ul>
+    </article>               
+    <hr>
+    {% endfor %} 
+  </div>
+</main>
+{% endblock %}

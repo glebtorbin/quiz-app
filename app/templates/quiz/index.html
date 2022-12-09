@@ -18,9 +18,9 @@
         <article>
           {% for quiz in quiz_list %}
             <ul>
-              <li>
-                Название: {{ quiz.title }}
-              </li>
+              <h3>
+                {{ quiz.title }}
+              </h3>
               <li>
                 Дата публикации: {{ quiz.created_at|date:"d E Y" }}
               </li>

@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
 from django.core.paginator import Paginator
-from .models import Quiz, Question, Result
+from .models import Quiz, Question, Result, User
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -10,7 +10,7 @@ def index(request):
     }
     return render(request, 'quiz/index.html', context)
 
-
+@login_required
 def quiz_passing(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
     if request.method == 'POST':
@@ -21,8 +21,8 @@ def quiz_passing(request, quiz_id):
         total=0
         for q in questions:
             total+=1
-            answer = request.POST.get(q.question) # Gets user’s choice, i.e the key of answer
-            items = vars(q) # Holds the value for choice
+            answer = request.POST.get(q.question)
+            items = vars(q)
             print(items[answer])
             if q.ans ==  items[answer]:
                 score+=10
@@ -34,7 +34,8 @@ def quiz_passing(request, quiz_id):
             user=request.user,
             quiz=quiz,
             true_answers=correct,
-            false_answers=wrong
+            false_answers=wrong,
+            score=score
         )
         context = {
             'score':score,
@@ -53,7 +54,14 @@ def quiz_passing(request, quiz_id):
             'quiz': quiz
         }
         return render(request,'quiz/quiz.html',context)
- 
 
-
+@login_required
+def profile(request):
+    user = User.objects.get(id=request.user.id)
+    results = Result.objects.filter(user=user)
+    context = {
+        'user': user,
+        'results': results
+    }
+    return render(request, 'quiz/profile.html', context)
 
